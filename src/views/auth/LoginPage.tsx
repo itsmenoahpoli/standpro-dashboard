@@ -5,8 +5,8 @@ import { LoginForm } from "@/components/app";
 const LoginPage: React.FC = () => {
   return (
     <div className="flex flex-col gap-y-4">
-      <h1 className="text-lg text-center text-gray-600 font-medium">{STATIC_TEXT.TITLE}</h1>
-      <h2 className="text-lg text-center text-gray-800 font-bold">LOG IN</h2>
+      <h1 className="text-lg text-center font-medium">{STATIC_TEXT.TITLE}</h1>
+      <h2 className="text-lg text-center font-bold">LOG IN</h2>
 
       <LoginForm />
     </div>

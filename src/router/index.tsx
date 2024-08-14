@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AuthLayout, DashboardLayout } from "@/layouts";
 
 const LoadComponent = (Component: React.ComponentType) => {
@@ -24,11 +24,18 @@ const LoginPage = LoadComponent(React.lazy(() => import("@/views/auth/LoginPage"
  * Dashboard Pages
  */
 const DashboardHomePage = LoadComponent(React.lazy(() => import("@/views/dashboard/HomePage")));
+const FilesIncomingPage = LoadComponent(React.lazy(() => import("@/views/dashboard/files/FilesIncomingPage")));
+const FilesOutgoingPage = LoadComponent(React.lazy(() => import("@/views/dashboard/files/FilesOutgoingPage")));
+const FilesReportsPage = LoadComponent(React.lazy(() => import("@/views/dashboard/files/FilesReportsPage")));
 
 export default createBrowserRouter([
   {
     path: "*",
     element: ErrorPage,
+  },
+  {
+    path: "/",
+    element: <Navigate to="/auth/login" />,
   },
   {
     path: "/auth",
@@ -47,6 +54,18 @@ export default createBrowserRouter([
       {
         path: "/dashboard",
         element: DashboardHomePage,
+      },
+      {
+        path: "/dashboard/files/incoming",
+        element: FilesIncomingPage,
+      },
+      {
+        path: "/dashboard/files/outgoing",
+        element: FilesOutgoingPage,
+      },
+      {
+        path: "/dashboard/files/reports",
+        element: FilesReportsPage,
       },
     ],
   },

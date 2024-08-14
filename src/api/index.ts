@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from "axios";
+import { useAuthStore } from "@/store";
 
 const instance: AxiosInstance = axios.create({
   baseURL: "/api/v1/",
@@ -6,11 +7,18 @@ const instance: AxiosInstance = axios.create({
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    const { token } = useAuthStore.getState();
+
     /**
      * Set Headers
      */
     config.headers["Accept"] = "application/json";
     config.headers["Content-Type"] = "application/json";
+    config.headers["X-API-KEY"] = "secretkey";
+
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
 
     return config;
   },

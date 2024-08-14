@@ -1,6 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuthHook } from "@/hooks/auth.hook";
 import { APP_ROUTES } from "@/constants";
 
@@ -14,5 +14,9 @@ export const DashboardLayout: React.FC = () => {
       toast.warning("You must login to access the dashboard");
     }
   }, []);
-  return <div>DashboardLayout</div>;
+  return (
+    <div className="h-screen w-full">
+      <Outlet />
+    </div>
+  );
 };

@@ -18,7 +18,7 @@ export default ({ mode }: ConfigEnv) => {
         "/api/v1": {
           target: process.env.VITE_APP_API_BASEURL, // The target backend server URL
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api\/v1/, "/api/v1"),
+          rewrite: (path) => path.replace(/^\/api\/v1/, ""),
         },
       },
     },
