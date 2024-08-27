@@ -24,6 +24,7 @@ const LoginPage = LoadComponent(React.lazy(() => import("@/views/auth/LoginPage"
  * Dashboard Pages
  */
 const DashboardHomePage = LoadComponent(React.lazy(() => import("@/views/dashboard/HomePage")));
+const FileRecordLogFormPage = LoadComponent(React.lazy(() => import("@/views/dashboard/files/FileRecordLogFormPage")));
 const FilesIncomingPage = LoadComponent(React.lazy(() => import("@/views/dashboard/files/FilesIncomingPage")));
 const FilesOutgoingPage = LoadComponent(React.lazy(() => import("@/views/dashboard/files/FilesOutgoingPage")));
 const FilesReportsPage = LoadComponent(React.lazy(() => import("@/views/dashboard/files/FilesReportsPage")));
@@ -54,6 +55,10 @@ export default createBrowserRouter([
       {
         path: "/dashboard",
         element: DashboardHomePage,
+      },
+      {
+        path: "/dashboard/files/form",
+        element: FileRecordLogFormPage,
       },
       {
         path: "/dashboard/files/incoming",

@@ -8,7 +8,7 @@ const FilesIncomingPage: React.FC = () => {
   return (
     <div className="flex flex-col gap-y-8">
       <div className="container pt-5 mx-auto">
-        <Link to="/dashboard/overview" className="text-blue-800 underline">
+        <Link to="/dashboard" className="text-blue-800 underline">
           Back to home
         </Link>
       </div>
@@ -19,9 +19,11 @@ const FilesIncomingPage: React.FC = () => {
 
       <div className="container flex flex-col gap-y-5 mx-auto">
         <div className="flex flex-row justify-between items-center">
-          <Button color="light" className="rounded-full border border-gray-600">
-            <FiPlusCircle size={20} /> &nbsp; ADD NEW
-          </Button>
+          <Link to="/dashboard/files/form">
+            <Button color="light" className="rounded-full border border-gray-600">
+              <FiPlusCircle size={20} /> &nbsp; ADD NEW
+            </Button>
+          </Link>
 
           <div className="p-10">
             <img src={FILES_LOGO} alt="files-logo.jpeg" />
