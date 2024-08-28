@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Button, Card, Table } from "flowbite-react";
 import { FiPlusCircle } from "react-icons/fi";
 import { RecordLogsService } from "@/services";
-import FILES_LOGO from "@/assets/files-logo.jpeg";
 import { RecordLog } from "@/types/models";
+import FILES_LOGO from "@/assets/files-logo.jpeg";
 
 const _recordLogsService = new RecordLogsService();
 
