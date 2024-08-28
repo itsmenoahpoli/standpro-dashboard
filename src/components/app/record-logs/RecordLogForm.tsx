@@ -17,7 +17,7 @@ export const RecordLogForm: React.FC<Props> = (props) => {
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
 
   const resetForm = () => {
-    document.querySelector("form").reset();
+    document.querySelector("form")?.reset();
   };
 
   const handleFormSubmit = handleSubmit(async (formData) => {
