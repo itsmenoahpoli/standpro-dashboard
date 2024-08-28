@@ -19,7 +19,7 @@ const FilesOutgoingPage: React.FC = () => {
 
       <div className="container flex flex-col gap-y-5 mx-auto">
         <div className="flex flex-row justify-between items-center">
-          <Link to="/dashboard/files/form">
+          <Link to="/dashboard/files/form?type=outgoing">
             <Button color="light" className="rounded-full border border-gray-600">
               <FiPlusCircle size={20} /> &nbsp; ADD NEW
             </Button>

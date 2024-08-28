@@ -19,7 +19,7 @@ const FilesIncomingPage: React.FC = () => {
 
       <div className="container flex flex-col gap-y-5 mx-auto">
         <div className="flex flex-row justify-between items-center">
-          <Link to="/dashboard/files/form">
+          <Link to="/dashboard/files/form?type=incoming">
             <Button color="light" className="rounded-full border border-gray-600">
               <FiPlusCircle size={20} /> &nbsp; ADD NEW
             </Button>
@@ -37,7 +37,7 @@ const FilesIncomingPage: React.FC = () => {
             <Table.Head>
               <Table.HeadCell>NO</Table.HeadCell>
               <Table.HeadCell>DATE RECEIVED</Table.HeadCell>
-              <Table.HeadCell>TIME RELEASE</Table.HeadCell>
+              <Table.HeadCell>TIME RELEASED</Table.HeadCell>
               <Table.HeadCell>DATE LETTER</Table.HeadCell>
               <Table.HeadCell>SUBJECT</Table.HeadCell>
               <Table.HeadCell>FROM</Table.HeadCell>
