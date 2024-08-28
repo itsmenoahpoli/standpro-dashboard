@@ -1,10 +1,20 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Button, Card, Table } from "flowbite-react";
 import { FiPlusCircle } from "react-icons/fi";
+import { RecordLogsService } from "@/services";
 import FILES_LOGO from "@/assets/files-logo.jpeg";
+import { RecordLog } from "@/types/models";
+
+const _recordLogsService = new RecordLogsService();
 
 const FilesIncomingPage: React.FC = () => {
+  const { isLoading, data } = useQuery({
+    queryKey: ["record-logs-incoming-data"],
+    queryFn: async () => _recordLogsService.getRecordLogsList("incoming"),
+  });
+
   return (
     <div className="flex flex-col gap-y-8">
       <div className="container pt-5 mx-auto">
@@ -29,24 +39,43 @@ const FilesIncomingPage: React.FC = () => {
             <img src={FILES_LOGO} alt="files-logo.jpeg" />
           </div>
 
-          <input type="text" className="w-[300px] text-sm rounded-full" placeholder="Search" />
+          <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" />
         </div>
 
         <Card>
-          <Table className="w-full">
-            <Table.Head>
-              <Table.HeadCell>NO</Table.HeadCell>
-              <Table.HeadCell>DATE RECEIVED</Table.HeadCell>
-              <Table.HeadCell>TIME RELEASED</Table.HeadCell>
-              <Table.HeadCell>DATE LETTER</Table.HeadCell>
-              <Table.HeadCell>SUBJECT</Table.HeadCell>
-              <Table.HeadCell>FROM</Table.HeadCell>
-              <Table.HeadCell>AGENCY</Table.HeadCell>
-              <Table.HeadCell>PERSON WHO RECEIVED THE COMMUNICATION</Table.HeadCell>
-              <Table.HeadCell>NAME OF FOLDER</Table.HeadCell>
-            </Table.Head>
-            <Table.Body></Table.Body>
-          </Table>
+          {isLoading ? (
+            <p className="text-center text-lg">DATA LOADING ...</p>
+          ) : (
+            <Table className="w-full">
+              <Table.Head>
+                <Table.HeadCell>NO</Table.HeadCell>
+                <Table.HeadCell>DATE RECEIVED</Table.HeadCell>
+                <Table.HeadCell>TIME RELEASED</Table.HeadCell>
+                <Table.HeadCell>DATE LETTER</Table.HeadCell>
+                <Table.HeadCell>SUBJECT</Table.HeadCell>
+                <Table.HeadCell>FROM</Table.HeadCell>
+                <Table.HeadCell>AGENCY</Table.HeadCell>
+                <Table.HeadCell>PERSON WHO RECEIVED THE COMMUNICATION</Table.HeadCell>
+                <Table.HeadCell>NAME OF FOLDER</Table.HeadCell>
+              </Table.Head>
+              <Table.Body>
+                {Array.isArray(data) &&
+                  data.map((d: RecordLog) => (
+                    <Table.Row>
+                      <Table.Cell>{d.id}</Table.Cell>
+                      <Table.Cell>{d.date_received}</Table.Cell>
+                      <Table.Cell>{d.time_released}</Table.Cell>
+                      <Table.Cell>{d.date_letter}</Table.Cell>
+                      <Table.Cell>{d.subject}</Table.Cell>
+                      <Table.Cell>{d.from}</Table.Cell>
+                      <Table.Cell>{d.agency}</Table.Cell>
+                      <Table.Cell>{d.received_by}</Table.Cell>
+                      <Table.Cell>{d.name_of_folder}</Table.Cell>
+                    </Table.Row>
+                  ))}
+              </Table.Body>
+            </Table>
+          )}
         </Card>
       </div>
     </div>

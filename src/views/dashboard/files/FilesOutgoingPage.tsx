@@ -29,7 +29,7 @@ const FilesOutgoingPage: React.FC = () => {
             <img src={FILES_LOGO} alt="files-logo.jpeg" />
           </div>
 
-          <input type="text" className="w-[300px] text-sm rounded-full" placeholder="Search" />
+          <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" />
         </div>
 
         <Card>

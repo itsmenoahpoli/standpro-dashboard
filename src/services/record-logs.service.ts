@@ -1,7 +1,35 @@
 import { BaseService } from "./base.service";
+import { RecordLog } from "@/types/models";
 
 export class RecordLogsService extends BaseService {
-	public async getRecordLogsList() {
-		return await this.http.get('')
-	}
+  public async getRecordLogsList(type: RecordLog["type"]) {
+    return await this.http
+      .get("/admin/record-logs?raw=true&type=" + type)
+      .then((response) => response.data)
+      .catch((error) => this.handleError(error));
+  }
+
+  public async createRecordLog(payload: RecordLog, resetForm: () => void) {
+    const formData = new FormData();
+
+    for (const [key, value] of Object.entries(payload)) {
+      formData.append(key, value);
+    }
+
+    formData.append("upload_folder_id", "");
+
+    return await this.http
+      .post("/admin/record-logs", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          alert("Record log succesfully created/uploaded");
+          resetForm();
+        }
+      })
+      .catch((error) => this.handleError(error));
+  }
 }
