@@ -12,7 +12,7 @@ const _recordLogsService = new RecordLogsService();
 const FilesOutgoingPage: React.FC = () => {
   const { isLoading, data } = useQuery({
     queryKey: ["record-logs-incoming-data"],
-    queryFn: async () => _recordLogsService.getRecordLogsList("incoming"),
+    queryFn: async () => _recordLogsService.getRecordLogsList("outgoing"),
   });
 
   return (
