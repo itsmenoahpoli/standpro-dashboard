@@ -12,7 +12,7 @@ const FilesRecordLogFormPage: React.FC = () => {
   return (
     <div className="flex flex-col gap-y-8 pb-[50px]">
       <div className="container pt-5 mx-auto">
-        <Link to="/dashboard" className="text-blue-800 underline">
+        <Link to={`/dashboard/files/${formType}`} className="text-blue-800 underline">
           Back to home
         </Link>
       </div>
