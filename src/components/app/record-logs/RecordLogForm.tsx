@@ -13,7 +13,7 @@ type Props = {
 const _recordLogsService = new RecordLogsService();
 
 export const RecordLogForm: React.FC<Props> = (props) => {
-  const { handleSubmit, register } = useForm<RecordLog>();
+  const { handleSubmit, register, setValue } = useForm<RecordLog>();
 
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
 
@@ -21,16 +21,34 @@ export const RecordLogForm: React.FC<Props> = (props) => {
     document.querySelector("form")?.reset();
   };
 
-  const handleFormSubmit = handleSubmit(async (formData) => {
-    formData.type = props.type;
-    formData.file = uploadedFile;
+  const handleCreate = async (data: any) => {
+    await _recordLogsService.createRecordLog(data, resetForm);
+  };
 
-    return await _recordLogsService.createRecordLog(formData, resetForm);
+  const handleUpdate = async (data: any) => {
+    await _recordLogsService.updateRecordLog(props.data.id, data);
+  };
+
+  const handleFormSubmit = handleSubmit(async (formData) => {
+    if (props.data) {
+      formData.type = props.type;
+      return handleUpdate(formData);
+    } else {
+      formData.type = props.type;
+      formData.file = uploadedFile;
+      return handleCreate(formData);
+    }
   });
 
   const handleFileUpload = (file: File) => {
     setUploadedFile(file);
   };
+
+  React.useEffect(() => {
+    if (props.data) {
+      Object.keys(props.data).forEach((key: any) => setValue(key, props.data[key]));
+    }
+  }, [props.data]);
 
   return (
     <form onSubmit={handleFormSubmit} className="flex flex-col gap-y-3">
@@ -43,10 +61,12 @@ export const RecordLogForm: React.FC<Props> = (props) => {
       <input placeholder="Person Who Received the Communication" {...register("received_by")} required />
       <input placeholder="Name of Folder" {...register("name_of_folder")} required />
 
-      <div className="border border-gray-200 rounded-md p-3">
-        <p className="mb-2">File to be uploaded:</p>
-        <input type="file" onChange={(event) => handleFileUpload(event.target.files![0])} required />
-      </div>
+      {props.data ? null : (
+        <div className="border border-gray-200 rounded-md p-3">
+          <p className="mb-2">File to be uploaded:</p>
+          <input type="file" onChange={(event) => handleFileUpload(event.target.files![0])} required />
+        </div>
+      )}
 
       <Button type="submit">Submit</Button>
     </form>

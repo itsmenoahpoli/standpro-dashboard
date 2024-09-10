@@ -20,7 +20,7 @@ const FilesRecordLogFormPage: React.FC = () => {
   const [formData, setFormData] = React.useState<any>(null);
 
   const fetchData = async () => {
-    if (id) await _recordLogsService.getRecordLog(id).then((data) => setFormData(data));
+    if (id) await _recordLogsService.getRecordLog(+id).then((data) => setFormData(data));
   };
 
   React.useEffect(() => {

@@ -33,11 +33,21 @@ export class RecordLogsService extends BaseService {
       .catch((error) => this.handleError(error));
   }
 
+  public async updateRecordLog(id: number, payload: RecordLog) {
+    return await this.http
+      .patch("/admin/record-logs/" + id, payload)
+      .then((response) => {
+        alert("Record updated");
+        return response.data;
+      })
+      .catch((error) => this.handleError(error));
+  }
+
   public async getRecordLog(id: number) {
     return await this.http
       .get("/admin/record-logs/" + id)
       .then((response) => {
-        console.log(response);
+        return response.data;
       })
       .catch((error) => this.handleError(error));
   }
@@ -46,7 +56,7 @@ export class RecordLogsService extends BaseService {
     return await this.http
       .delete("/admin/record-logs/" + id)
       .then((response) => {
-        console.log(response);
+        return response.data;
         alert("Record has been deleted");
       })
       .catch((error) => this.handleError(error));
