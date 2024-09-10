@@ -61,6 +61,10 @@ export default createBrowserRouter([
         element: FileRecordLogFormPage,
       },
       {
+        path: "/dashboard/files/form/:id/edit",
+        element: FileRecordLogFormPage,
+      },
+      {
         path: "/dashboard/files/incoming",
         element: FilesIncomingPage,
       },

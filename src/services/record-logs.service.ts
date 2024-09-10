@@ -32,4 +32,22 @@ export class RecordLogsService extends BaseService {
       })
       .catch((error) => this.handleError(error));
   }
+
+  public async getRecordLog(id: number) {
+    return await this.http
+      .get("/admin/record-logs/" + id)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => this.handleError(error));
+  }
+
+  public async deleteRecordLog(id: number) {
+    return await this.http
+      .delete("/admin/record-logs/" + id)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => this.handleError(error));
+  }
 }

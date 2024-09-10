@@ -15,6 +15,12 @@ const FilesIncomingPage: React.FC = () => {
     queryFn: async () => _recordLogsService.getRecordLogsList("incoming"),
   });
 
+  const handleDelete = async (id: number) => {
+    if (confirm("Confirm to delete this record?")) {
+      await _recordLogsService.deleteRecordLog(id);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-y-8">
       <div className="container pt-5 mx-auto">
@@ -57,6 +63,7 @@ const FilesIncomingPage: React.FC = () => {
                 <Table.HeadCell>AGENCY</Table.HeadCell>
                 <Table.HeadCell>PERSON WHO RECEIVED THE COMMUNICATION</Table.HeadCell>
                 <Table.HeadCell>NAME OF FOLDER</Table.HeadCell>
+                <Table.HeadCell>ACTIONS</Table.HeadCell>
               </Table.Head>
               <Table.Body>
                 {Array.isArray(data) &&
@@ -71,6 +78,16 @@ const FilesIncomingPage: React.FC = () => {
                       <Table.Cell>{d.agency}</Table.Cell>
                       <Table.Cell>{d.received_by}</Table.Cell>
                       <Table.Cell>{d.name_of_folder}</Table.Cell>
+                      <Table.Cell>
+                        <div className="flex flex-row gap-x-3">
+                          <Link to={"/dashboard/files/form/:id/edit?type=incoming"}>
+                            <button className="text-xs border rounded-md p-2">Update</button>
+                          </Link>
+                          <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
+                            Delete
+                          </button>
+                        </div>
+                      </Table.Cell>
                     </Table.Row>
                   ))}
               </Table.Body>
