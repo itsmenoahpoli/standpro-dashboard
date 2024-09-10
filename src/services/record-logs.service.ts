@@ -47,6 +47,7 @@ export class RecordLogsService extends BaseService {
       .delete("/admin/record-logs/" + id)
       .then((response) => {
         console.log(response);
+        alert("Record has been deleted");
       })
       .catch((error) => this.handleError(error));
   }

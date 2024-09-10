@@ -10,14 +10,19 @@ import FILES_LOGO from "@/assets/files-logo.jpeg";
 const _recordLogsService = new RecordLogsService();
 
 const FilesIncomingPage: React.FC = () => {
-  const { isLoading, data } = useQuery({
+  const [list, setList] = React.useState([]);
+  const [filter, setFilter] = React.useState("");
+
+  const { isLoading, refetch } = useQuery({
     queryKey: ["record-logs-incoming-data"],
-    queryFn: async () => _recordLogsService.getRecordLogsList("incoming"),
+    queryFn: async () => {
+      _recordLogsService.getRecordLogsList("incoming").then((data) => setList(data));
+    },
   });
 
   const handleDelete = async (id: number) => {
     if (confirm("Confirm to delete this record?")) {
-      await _recordLogsService.deleteRecordLog(id);
+      await _recordLogsService.deleteRecordLog(id).then(() => refetch());
     }
   };
 
@@ -66,30 +71,29 @@ const FilesIncomingPage: React.FC = () => {
                 <Table.HeadCell>ACTIONS</Table.HeadCell>
               </Table.Head>
               <Table.Body>
-                {Array.isArray(data) &&
-                  data.map((d: RecordLog) => (
-                    <Table.Row>
-                      <Table.Cell>{d.id}</Table.Cell>
-                      <Table.Cell>{d.date_received}</Table.Cell>
-                      <Table.Cell>{d.time_released}</Table.Cell>
-                      <Table.Cell>{d.date_letter}</Table.Cell>
-                      <Table.Cell>{d.subject}</Table.Cell>
-                      <Table.Cell>{d.from}</Table.Cell>
-                      <Table.Cell>{d.agency}</Table.Cell>
-                      <Table.Cell>{d.received_by}</Table.Cell>
-                      <Table.Cell>{d.name_of_folder}</Table.Cell>
-                      <Table.Cell>
-                        <div className="flex flex-row gap-x-3">
-                          <Link to={"/dashboard/files/form/:id/edit?type=incoming"}>
-                            <button className="text-xs border rounded-md p-2">Update</button>
-                          </Link>
-                          <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
-                            Delete
-                          </button>
-                        </div>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
+                {list.map((d: RecordLog) => (
+                  <Table.Row>
+                    <Table.Cell>{d.id}</Table.Cell>
+                    <Table.Cell>{d.date_received}</Table.Cell>
+                    <Table.Cell>{d.time_released}</Table.Cell>
+                    <Table.Cell>{d.date_letter}</Table.Cell>
+                    <Table.Cell>{d.subject}</Table.Cell>
+                    <Table.Cell>{d.from}</Table.Cell>
+                    <Table.Cell>{d.agency}</Table.Cell>
+                    <Table.Cell>{d.received_by}</Table.Cell>
+                    <Table.Cell>{d.name_of_folder}</Table.Cell>
+                    <Table.Cell>
+                      <div className="flex flex-row gap-x-3">
+                        <Link to={"/dashboard/files/form/:id/edit?type=incoming"}>
+                          <button className="text-xs border rounded-md p-2">Update</button>
+                        </Link>
+                        <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
               </Table.Body>
             </Table>
           )}
