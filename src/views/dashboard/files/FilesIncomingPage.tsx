@@ -84,7 +84,7 @@ const FilesIncomingPage: React.FC = () => {
                     <Table.Cell>{d.name_of_folder}</Table.Cell>
                     <Table.Cell>
                       <div className="flex flex-row gap-x-3">
-                        <Link to={"/dashboard/files/form/:id/edit?type=incoming"}>
+                        <Link to={`/dashboard/files/form/${d.id}/edit?type=incoming`}>
                           <button className="text-xs border rounded-md p-2">Update</button>
                         </Link>
                         <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>

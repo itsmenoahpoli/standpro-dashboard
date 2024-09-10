@@ -7,6 +7,7 @@ import type { RecordLog } from "@/types/models";
 
 type Props = {
   type: "incoming" | "outgoing";
+  data?: any;
 };
 
 const _recordLogsService = new RecordLogsService();
