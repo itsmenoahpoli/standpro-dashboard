@@ -31,6 +31,10 @@ const FilesIncomingPage: React.FC = () => {
     }
   };
 
+  const handleSearch = (searchVal: string) => {
+    setSearch(searchVal);
+  };
+
   const handleView = (isOpen: boolean, data: any) => {
     setViewData({ isOpen, data });
   };
@@ -70,7 +74,7 @@ const FilesIncomingPage: React.FC = () => {
             <img src={FILES_LOGO} alt="files-logo.jpeg" />
           </div>
 
-          <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" />
+          <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" onChange={(e) => handleSearch(e.target.value)} />
         </div>
 
         <Modal show={viewData.isOpen} onClose={() => handleView(false, null)}>
