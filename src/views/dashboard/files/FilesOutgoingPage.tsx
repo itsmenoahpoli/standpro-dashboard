@@ -10,8 +10,8 @@ import FILES_LOGO from "@/assets/files-logo.jpeg";
 const _recordLogsService = new RecordLogsService();
 
 const FilesOutgoingPage: React.FC = () => {
-  const [list, setList] = React.useState([]);
-  const [filter, setFilter] = React.useState("");
+  const [list, setList] = React.useState<any>([]);
+  const [search, setSearch] = React.useState<string>("");
 
   const { isLoading, refetch } = useQuery({
     queryKey: ["record-logs-incoming-data"],
@@ -24,6 +24,10 @@ const FilesOutgoingPage: React.FC = () => {
     if (confirm("Confirm to delete this record?")) {
       await _recordLogsService.deleteRecordLog(id).then(() => refetch());
     }
+  };
+
+  const handleSearch = (searchVal: string) => {
+    setSearch(searchVal);
   };
 
   return (
@@ -50,7 +54,7 @@ const FilesOutgoingPage: React.FC = () => {
             <img src={FILES_LOGO} alt="files-logo.jpeg" />
           </div>
 
-          <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" />
+          <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" onChange={(e) => handleSearch(e.target.value)} />
         </div>
 
         <Card>
@@ -84,7 +88,7 @@ const FilesOutgoingPage: React.FC = () => {
                     <Table.Cell>{d.name_of_folder}</Table.Cell>
                     <Table.Cell>
                       <div className="flex flex-row gap-x-3">
-                        <Link to={`/dashboard/files/form/${d.id}/edit?type=incoming`}>
+                        <Link to={`/dashboard/files/form/${d.id}/edit?type=outgoing`}>
                           <button className="text-xs border rounded-md p-2">Update</button>
                         </Link>
                         <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
