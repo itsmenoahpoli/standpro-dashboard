@@ -1,7 +1,8 @@
 import React from "react";
+import _ from "lodash";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Button, Card, Table } from "flowbite-react";
+import { Button, Card, Table, Modal } from "flowbite-react";
 import { FiPlusCircle } from "react-icons/fi";
 import { RecordLogsService } from "@/services";
 import { RecordLog } from "@/types/models";
@@ -12,6 +13,10 @@ const _recordLogsService = new RecordLogsService();
 const FilesOutgoingPage: React.FC = () => {
   const [list, setList] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string>("");
+  const [viewData, setViewData] = React.useState<any>({
+    isOpen: false,
+    data: null,
+  });
 
   const { isLoading, refetch } = useQuery({
     queryKey: ["record-logs-incoming-data"],
@@ -19,6 +24,10 @@ const FilesOutgoingPage: React.FC = () => {
       _recordLogsService.getRecordLogsList("outgoing").then((data) => setList(data));
     },
   });
+
+  const handleView = (isOpen: boolean, data: any) => {
+    setViewData({ isOpen, data });
+  };
 
   const handleDelete = async (id: number) => {
     if (confirm("Confirm to delete this record?")) {
@@ -28,6 +37,17 @@ const FilesOutgoingPage: React.FC = () => {
 
   const handleSearch = (searchVal: string) => {
     setSearch(searchVal);
+  };
+
+  const renderViewDetails = (data: any) => {
+    if (!data) return <p>No Data</p>;
+
+    // @ts-ignore
+    return Object.keys(data).map((k) => (
+      <p key={k}>
+        {_.startCase(k)} &mdash; {data[k] ?? "N/A"}
+      </p>
+    ));
   };
 
   return (
@@ -56,6 +76,18 @@ const FilesOutgoingPage: React.FC = () => {
 
           <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" onChange={(e) => handleSearch(e.target.value)} />
         </div>
+
+        <Modal show={viewData.isOpen} onClose={() => handleView(false, null)}>
+          <Modal.Header>View Details</Modal.Header>
+          <Modal.Body>
+            <div className="space-y-6">{renderViewDetails(viewData?.data)}</div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button color="gray" onClick={() => handleView(false, null)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
         <Card>
           {isLoading ? (
@@ -91,6 +123,9 @@ const FilesOutgoingPage: React.FC = () => {
                         <Link to={`/dashboard/files/form/${d.id}/edit?type=outgoing`}>
                           <button className="text-xs border rounded-md p-2">Update</button>
                         </Link>
+                        <button className="text-xs text-white bg-blue-700 border rounded-md p-2" onClick={() => handleView(true, d)}>
+                          View
+                        </button>
                         <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
                           Delete
                         </button>
