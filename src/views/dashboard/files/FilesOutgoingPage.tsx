@@ -19,9 +19,12 @@ const FilesOutgoingPage: React.FC = () => {
   });
 
   const { isLoading, refetch } = useQuery({
-    queryKey: ["record-logs-incoming-data"],
+    queryKey: ["record-logs-outgoing-data"],
     queryFn: async () => {
-      _recordLogsService.getRecordLogsList("outgoing").then((data) => setList(data));
+      return _recordLogsService.getRecordLogsList("outgoing").then((data) => {
+        setList(data);
+        return data;
+      });
     },
   });
 
@@ -36,7 +39,28 @@ const FilesOutgoingPage: React.FC = () => {
   };
 
   const handleSearch = (searchVal: string) => {
+    console.log(searchVal);
     setSearch(searchVal);
+
+    if (!searchVal) {
+      return refetch();
+    }
+
+    const filteredList = list.filter((item: any) => {
+      return (
+        item.type.toLowerCase().includes(searchVal.toLowerCase()) ||
+        item.date_received.includes(searchVal) ||
+        item.time_released.includes(searchVal) ||
+        item.date_letter.toLowerCase().includes(searchVal.toLowerCase()) ||
+        item.subject.toLowerCase().includes(searchVal.toLowerCase()) ||
+        item.from.toLowerCase().includes(searchVal.toLowerCase()) ||
+        item.agency.toLowerCase().includes(searchVal.toLowerCase()) ||
+        item.received_by.toLowerCase().includes(searchVal.toLowerCase()) ||
+        item.name_of_folder.toLowerCase().includes(searchVal.toLowerCase())
+      );
+    });
+
+    setList(filteredList);
   };
 
   const renderViewDetails = (data: any) => {
@@ -74,7 +98,13 @@ const FilesOutgoingPage: React.FC = () => {
             <img src={FILES_LOGO} alt="files-logo.jpeg" />
           </div>
 
-          <input type="text" className="!w-[300px] text-sm rounded-full" placeholder="Search" onChange={(e) => handleSearch(e.target.value)} />
+          <input
+            type="text"
+            className="!w-[300px] text-sm rounded-full"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
 
         <Modal show={viewData.isOpen} onClose={() => handleView(false, null)}>
@@ -107,32 +137,38 @@ const FilesOutgoingPage: React.FC = () => {
                 <Table.HeadCell>ACTIONS</Table.HeadCell>
               </Table.Head>
               <Table.Body>
-                {list.map((d: RecordLog) => (
+                {!list.length ? (
                   <Table.Row>
-                    <Table.Cell>{d.id}</Table.Cell>
-                    <Table.Cell>{d.date_received}</Table.Cell>
-                    <Table.Cell>{d.time_released}</Table.Cell>
-                    <Table.Cell>{d.date_letter}</Table.Cell>
-                    <Table.Cell>{d.subject}</Table.Cell>
-                    <Table.Cell>{d.from}</Table.Cell>
-                    <Table.Cell>{d.agency}</Table.Cell>
-                    <Table.Cell>{d.received_by}</Table.Cell>
-                    <Table.Cell>{d.name_of_folder}</Table.Cell>
-                    <Table.Cell>
-                      <div className="flex flex-row gap-x-3">
-                        <Link to={`/dashboard/files/form/${d.id}/edit?type=outgoing`}>
-                          <button className="text-xs border rounded-md p-2">Update</button>
-                        </Link>
-                        <button className="text-xs text-white bg-blue-700 border rounded-md p-2" onClick={() => handleView(true, d)}>
-                          View
-                        </button>
-                        <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
-                          Delete
-                        </button>
-                      </div>
-                    </Table.Cell>
+                    <Table.Cell colSpan={10}>No Data Available</Table.Cell>
                   </Table.Row>
-                ))}
+                ) : (
+                  list.map((d: RecordLog) => (
+                    <Table.Row>
+                      <Table.Cell>{d.id}</Table.Cell>
+                      <Table.Cell>{d.date_received}</Table.Cell>
+                      <Table.Cell>{d.time_released}</Table.Cell>
+                      <Table.Cell>{d.date_letter}</Table.Cell>
+                      <Table.Cell>{d.subject}</Table.Cell>
+                      <Table.Cell>{d.from}</Table.Cell>
+                      <Table.Cell>{d.agency}</Table.Cell>
+                      <Table.Cell>{d.received_by}</Table.Cell>
+                      <Table.Cell>{d.name_of_folder}</Table.Cell>
+                      <Table.Cell>
+                        <div className="flex flex-row gap-x-3">
+                          <Link to={`/dashboard/files/form/${d.id}/edit?type=outgoing`}>
+                            <button className="text-xs border rounded-md p-2">Update</button>
+                          </Link>
+                          <button className="text-xs text-white bg-blue-700 border rounded-md p-2" onClick={() => handleView(true, d)}>
+                            View
+                          </button>
+                          <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
+                            Delete
+                          </button>
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))
+                )}
               </Table.Body>
             </Table>
           )}
