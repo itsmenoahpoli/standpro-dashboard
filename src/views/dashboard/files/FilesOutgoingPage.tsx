@@ -82,7 +82,7 @@ const FilesOutgoingPage: React.FC = () => {
         </Link>
       </div>
       <div className="flex flex-col gap-y-3 text-center mt-10">
-        <h1 className="text-[48px] font-bold">Outgoing COMMUNICATION PANEL</h1>
+        <h1 className="text-[48px] font-bold">OUTGOING COMMUNICATION PANEL</h1>
         <h1 className="text-2xl font-medium">RECORD LOG SHEET FOR OUTGOING COMMUNICATION</h1>
       </div>
 
