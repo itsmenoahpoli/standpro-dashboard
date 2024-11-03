@@ -82,7 +82,7 @@ const FilesIncomingPage: React.FC = () => {
         </Link>
       </div>
       <div className="flex flex-col gap-y-3 text-center mt-10">
-        <h1 className="text-[48px] font-bold">INCOMING COMMUNICATION PANEL</h1>
+        {/* <h1 className="text-[48px] font-bold">INCOMING COMMUNICATION PANEL</h1> */}
         <h1 className="text-2xl font-medium">RECORD LOG SHEET FOR INCOMMING COMMUNICATION</h1>
       </div>
 
@@ -125,7 +125,6 @@ const FilesIncomingPage: React.FC = () => {
           ) : (
             <Table className="w-full">
               <Table.Head>
-                <Table.HeadCell>NO</Table.HeadCell>
                 <Table.HeadCell>DATE RECEIVED</Table.HeadCell>
                 <Table.HeadCell>TIME RELEASED</Table.HeadCell>
                 <Table.HeadCell>DATE LETTER</Table.HeadCell>
@@ -144,7 +143,6 @@ const FilesIncomingPage: React.FC = () => {
                 ) : (
                   list.map((d: RecordLog) => (
                     <Table.Row>
-                      <Table.Cell>{d.id}</Table.Cell>
                       <Table.Cell>{d.date_received}</Table.Cell>
                       <Table.Cell>{d.time_released}</Table.Cell>
                       <Table.Cell>{d.date_letter}</Table.Cell>

@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { BaseService } from "./base.service";
 import { RecordLog } from "@/types/models";
 
@@ -26,8 +27,10 @@ export class RecordLogsService extends BaseService {
       })
       .then((response) => {
         if (response.status === 201) {
-          alert("Record log succesfully created/uploaded");
+          toast.success("Record log succesfully created/uploaded");
           resetForm();
+
+          window.location.href = `/dashboard/files/${payload.type}`;
         }
       })
       .catch((error) => this.handleError(error));
@@ -37,7 +40,7 @@ export class RecordLogsService extends BaseService {
     return await this.http
       .patch("/admin/record-logs/" + id, payload)
       .then((response) => {
-        alert("Record updated");
+        toast.success("Record updated");
         return response.data;
       })
       .catch((error) => this.handleError(error));
