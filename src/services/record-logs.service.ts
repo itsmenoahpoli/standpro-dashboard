@@ -59,8 +59,8 @@ export class RecordLogsService extends BaseService {
     return await this.http
       .delete("/admin/record-logs/" + id)
       .then((response) => {
+        toast.success("Record has been deleted");
         return response.data;
-        alert("Record has been deleted");
       })
       .catch((error) => this.handleError(error));
   }

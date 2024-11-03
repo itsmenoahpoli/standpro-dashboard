@@ -39,7 +39,6 @@ const FilesOutgoingPage: React.FC = () => {
   };
 
   const handleSearch = (searchVal: string) => {
-    console.log(searchVal);
     setSearch(searchVal);
 
     if (!searchVal) {
@@ -47,17 +46,7 @@ const FilesOutgoingPage: React.FC = () => {
     }
 
     const filteredList = list.filter((item: any) => {
-      return (
-        item.type.toLowerCase().includes(searchVal.toLowerCase()) ||
-        item.date_received.includes(searchVal) ||
-        item.time_released.includes(searchVal) ||
-        item.date_letter.toLowerCase().includes(searchVal.toLowerCase()) ||
-        item.subject.toLowerCase().includes(searchVal.toLowerCase()) ||
-        item.from.toLowerCase().includes(searchVal.toLowerCase()) ||
-        item.agency.toLowerCase().includes(searchVal.toLowerCase()) ||
-        item.received_by.toLowerCase().includes(searchVal.toLowerCase()) ||
-        item.name_of_folder.toLowerCase().includes(searchVal.toLowerCase())
-      );
+      return item.subject.toLowerCase().includes(searchVal.toLowerCase());
     });
 
     setList(filteredList);
@@ -101,7 +90,7 @@ const FilesOutgoingPage: React.FC = () => {
           <input
             type="text"
             className="!w-[300px] text-sm rounded-full"
-            placeholder="Search"
+            placeholder="Name of subject"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
           />
