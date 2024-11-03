@@ -49,7 +49,9 @@ const HomePage: React.FC = () => {
           </Button>
         ))}
 
-        <Button className="w-2/3 mx-auto">Logout</Button>
+        <Button className="w-2/3 mx-auto" onClick={handleLogout}>
+          Logout
+        </Button>
 
         <div className="p-10">
           <img src={FILES_LOGO} alt="files-logo.jpeg" />
