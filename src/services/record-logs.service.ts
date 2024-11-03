@@ -30,7 +30,9 @@ export class RecordLogsService extends BaseService {
           toast.success("Record log succesfully created/uploaded");
           resetForm();
 
-          window.location.href = `/dashboard/files/${payload.type}`;
+          setTimeout(() => {
+            window.location.href = `/dashboard/files/${payload.type}`;
+          }, 2000);
         }
       })
       .catch((error) => this.handleError(error));
@@ -40,7 +42,12 @@ export class RecordLogsService extends BaseService {
     return await this.http
       .patch("/admin/record-logs/" + id, payload)
       .then((response) => {
-        toast.success("Record updated");
+        toast.success("Record log succesfully created/uploaded");
+
+        setTimeout(() => {
+          window.location.href = `/dashboard/files/${payload.type}`;
+        }, 2000);
+
         return response.data;
       })
       .catch((error) => this.handleError(error));

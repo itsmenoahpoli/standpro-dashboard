@@ -57,12 +57,16 @@ export const RecordLogForm: React.FC<Props> = (props) => {
         <input type="time" placeholder="Time Released" defaultValue={format(new Date(), "HH:mm")} {...register("time_released")} required />
       </div>
       <div className="flex flex-col gap-2">
-        <small>Subject</small>
-        <input placeholder="Subject" {...register("subject")} required />
+        <small>Date Received</small>
+        <input type="date" placeholder="Date Received" {...register("date_received")} required />
       </div>
       <div className="flex flex-col gap-2">
         <small>Date of Letter</small>
         <input placeholder="Date Letter" {...register("date_letter")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>Subject</small>
+        <input placeholder="Subject" {...register("subject")} required />
       </div>
       <div className="flex flex-col gap-2">
         <small>From</small>
