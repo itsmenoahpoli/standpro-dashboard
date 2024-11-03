@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Button } from "flowbite-react";
+import { useAuthStore } from "@/store";
 import FILES_LOGO from "@/assets/files-logo.jpeg";
 
 const menuButtons = [
@@ -20,9 +21,16 @@ const menuButtons = [
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const { RESET_AUTH } = useAuthStore();
 
   const handleRedirect = (url: string) => {
     return navigate(url);
+  };
+
+  const handleLogout = () => {
+    RESET_AUTH();
+
+    window.location.href = "/auth/login";
   };
 
   return (
@@ -40,6 +48,8 @@ const HomePage: React.FC = () => {
             {button.label}
           </Button>
         ))}
+
+        <Button className="w-2/3 mx-auto">Logout</Button>
 
         <div className="p-10">
           <img src={FILES_LOGO} alt="files-logo.jpeg" />

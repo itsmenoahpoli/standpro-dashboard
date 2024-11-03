@@ -1,8 +1,10 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "@/store";
 
+const baseURL = import.meta.env.VITE_APP_API_BASEURL;
+
 const instance: AxiosInstance = axios.create({
-  baseURL: "/api/v1/",
+  baseURL,
 });
 
 instance.interceptors.request.use(
@@ -13,8 +15,8 @@ instance.interceptors.request.use(
      * Set Headers
      */
     config.headers["Accept"] = "application/json";
-    // config.headers["Content-Type"] = "application/json";
-    config.headers["X-API-KEY"] = "secretkey";
+    config.headers["Content-Type"] = "application/json";
+    // config.headers["X-API-KEY"] = "secretkey";
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
