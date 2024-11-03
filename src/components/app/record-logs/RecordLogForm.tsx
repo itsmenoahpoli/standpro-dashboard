@@ -51,20 +51,50 @@ export const RecordLogForm: React.FC<Props> = (props) => {
   }, [props.data]);
 
   return (
-    <form onSubmit={handleFormSubmit} className="flex flex-col gap-y-3">
-      <input type="date" placeholder="Date Received" {...register("date_received")} required />
-      <input type="time" placeholder="Time Released" defaultValue={format(new Date(), "HH:mm")} {...register("time_released")} required />
-      <input placeholder="Date Letter" {...register("date_letter")} required />
-      <input placeholder="Subject" {...register("subject")} required />
-      <input placeholder="From" {...register("from")} required />
-      <input placeholder="Agency" {...register("agency")} required />
-      <input placeholder="Person Who Received the Communication" {...register("received_by")} required />
-      <input placeholder="Name of Folder" {...register("name_of_folder")} required />
+    <form onSubmit={handleFormSubmit} className="flex flex-col gap-y-5">
+      <div className="flex flex-col gap-2">
+        <small>Time of Release</small>
+        <input type="time" placeholder="Time Released" defaultValue={format(new Date(), "HH:mm")} {...register("time_released")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>Subject</small>
+        <input placeholder="Subject" {...register("subject")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>Date of Letter</small>
+        <input placeholder="Date Letter" {...register("date_letter")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>From</small>
+        <input placeholder="From" {...register("from")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>Agency</small>
+        <input placeholder="Agency" {...register("agency")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>Person Who Received the Communication</small>
+        <input placeholder="Person Who Received the Communication" {...register("received_by")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>Name of Folder</small>
+        <input placeholder="Name of Folder" {...register("name_of_folder")} required />
+      </div>
+      <div className="flex flex-col gap-2">
+        <small>Type (Internal or External)</small>
+        <select className="border border-gray-300 rounded-md" {...register("type")} required>
+          <option value="" disabled>
+            -
+          </option>
+          <option value="internal">Internal</option>
+          <option value="external">External</option>
+        </select>
+      </div>
 
       {props.data ? null : (
         <div className="border border-gray-200 rounded-md p-3">
-          <p className="mb-2">File to be uploaded:</p>
-          <input type="file" onChange={(event) => handleFileUpload(event.target.files![0])} required />
+          <small className="mb-2">File to be uploaded:</small>
+          <input type="file" className="!border-0" onChange={(event) => handleFileUpload(event.target.files![0])} required />
         </div>
       )}
 
