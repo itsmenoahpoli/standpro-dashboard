@@ -142,7 +142,7 @@ const FilesIncomingPage: React.FC = () => {
                       <Table.Cell>{d.name_of_folder}</Table.Cell>
                       <Table.Cell>
                         <div className="flex flex-row gap-x-3">
-                          <Link to={`/dashboard/files/form/${d.id}/edit?type=outgoing`}>
+                          <Link to={`/dashboard/files/form/${d.id}/edit?type=incoming`}>
                             <button className="text-xs border rounded-md p-2">Update</button>
                           </Link>
                           <button className="text-xs text-white bg-blue-700 border rounded-md p-2" onClick={() => handleView(true, d)}>
