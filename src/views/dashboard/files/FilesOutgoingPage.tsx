@@ -122,6 +122,7 @@ const FilesOutgoingPage: React.FC = () => {
                 <Table.HeadCell>AGENCY</Table.HeadCell>
                 <Table.HeadCell>PERSON WHO RECEIVED THE COMMUNICATION</Table.HeadCell>
                 <Table.HeadCell>NAME OF FOLDER</Table.HeadCell>
+                <Table.HeadCell>RESOURCE OF CONNECTION</Table.HeadCell>
                 <Table.HeadCell>ACTIONS</Table.HeadCell>
               </Table.Head>
               <Table.Body>
@@ -140,6 +141,9 @@ const FilesOutgoingPage: React.FC = () => {
                       <Table.Cell>{d.agency}</Table.Cell>
                       <Table.Cell>{d.received_by}</Table.Cell>
                       <Table.Cell>{d.name_of_folder}</Table.Cell>
+                      <Table.Cell>
+                        <span className="uppercase">{d.type}</span>
+                      </Table.Cell>
                       <Table.Cell>
                         <div className="flex flex-row gap-x-3">
                           <Link to={`/dashboard/files/form/${d.id}/edit?type=outgoing`}>

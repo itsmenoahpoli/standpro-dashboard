@@ -86,7 +86,7 @@ export const RecordLogForm: React.FC<Props> = (props) => {
       </div>
       <div className="flex flex-col gap-2">
         <small>Type (Internal or External)</small>
-        <select className="border border-gray-300 rounded-md" {...register("type")} required>
+        <select className="border border-gray-300 rounded-md text-xs" {...register("type")} required>
           <option value="" disabled>
             -
           </option>

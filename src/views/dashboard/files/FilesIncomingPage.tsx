@@ -72,7 +72,7 @@ const FilesIncomingPage: React.FC = () => {
       </div>
       <div className="flex flex-col gap-y-3 text-center mt-10">
         {/* <h1 className="text-[48px] font-bold">INCOMING COMMUNICATION PANEL</h1> */}
-        <h1 className="text-2xl font-medium">RECORD LOG SHEET FOR INCOMMING COMMUNICATION</h1>
+        <h1 className="text-2xl font-medium">RECORD LOG SHEET FOR INCOMING COMMUNICATION</h1>
       </div>
 
       <div className="container flex flex-col gap-y-5 mx-auto">
@@ -122,6 +122,7 @@ const FilesIncomingPage: React.FC = () => {
                 <Table.HeadCell>AGENCY</Table.HeadCell>
                 <Table.HeadCell>PERSON WHO RECEIVED THE COMMUNICATION</Table.HeadCell>
                 <Table.HeadCell>NAME OF FOLDER</Table.HeadCell>
+                <Table.HeadCell>RESOURCE OF CONNECTION</Table.HeadCell>
                 <Table.HeadCell>ACTIONS</Table.HeadCell>
               </Table.Head>
               <Table.Body>
@@ -140,6 +141,9 @@ const FilesIncomingPage: React.FC = () => {
                       <Table.Cell>{d.agency}</Table.Cell>
                       <Table.Cell>{d.received_by}</Table.Cell>
                       <Table.Cell>{d.name_of_folder}</Table.Cell>
+                      <Table.Cell>
+                        <span className="uppercase">{d.type}</span>
+                      </Table.Cell>
                       <Table.Cell>
                         <div className="flex flex-row gap-x-3">
                           <Link to={`/dashboard/files/form/${d.id}/edit?type=incoming`}>
