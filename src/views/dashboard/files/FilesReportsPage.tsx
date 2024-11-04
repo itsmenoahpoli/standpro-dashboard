@@ -28,15 +28,15 @@ const FilesReportsPage: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center gap-y-3">
-      <Card className="w-1/3 rounded-2xl shadow-md p-10">
+      <Card className="w-1/3 flex flex-col items-center rounded-2xl shadow-md p-10">
         <h1 className="text-2xl text-center font-bold mb-3">REPORT PANEL</h1>
 
-        <div className="w-full flex flex-col">
+        <div className="w-1/2 flex flex-col mx-auto">
           {menuButtons.map((button) => (
             <Button
               key={`btn-${button.label}`}
               color="light"
-              className="w-full py-3 font-bold text-2xl border-0"
+              className="w-full py-3 font-bold text-2xl border-0 flex flex-row justify-between"
               onClick={() => handleRedirect(button.url)}
             >
               <div className="flex flex-row items-center gap-7">
