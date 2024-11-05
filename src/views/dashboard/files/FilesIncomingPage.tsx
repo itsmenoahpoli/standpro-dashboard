@@ -142,7 +142,7 @@ const FilesIncomingPage: React.FC = () => {
                       <Table.Cell>{d.received_by}</Table.Cell>
                       <Table.Cell>{d.name_of_folder}</Table.Cell>
                       <Table.Cell>
-                        <span className="uppercase">{d.type}</span>
+                        <span className="uppercase">{d.type_resource}</span>
                       </Table.Cell>
                       <Table.Cell>
                         <div className="flex flex-row gap-x-3">

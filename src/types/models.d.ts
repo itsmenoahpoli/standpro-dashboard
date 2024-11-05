@@ -14,6 +14,7 @@ export interface User extends SharedTypes {
 
 export interface RecordLog extends SharedTypes {
   type: "incoming" | "outgoing";
+  type_resource: "internal" | "external";
   date_received: string;
   time_released: string;
   date_letter: string;
