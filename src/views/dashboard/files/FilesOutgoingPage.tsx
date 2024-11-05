@@ -45,7 +45,7 @@ const FilesOutgoingPage: React.FC = () => {
   };
 
   const getFileSrc = (path: string) => {
-    return `http://standpro-backend.test/assets/get?path=${path}`;
+    return `http://localhost:8000/assets/get?path=${path}`;
   };
 
   return (

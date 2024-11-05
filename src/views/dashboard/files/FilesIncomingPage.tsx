@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Button, Card, Table, Modal } from "flowbite-react";
+import { Button, Card, Table } from "flowbite-react";
 import { FiPlusCircle } from "react-icons/fi";
 import { RecordLogsService } from "@/services";
 import { RecordLog } from "@/types/models";
@@ -45,7 +45,7 @@ const FilesIncomingPage: React.FC = () => {
   };
 
   const getFileSrc = (path: string) => {
-    return `http://standpro-backend.test/assets/get?path=${path}`;
+    return `http://localhost:8000/assets/get?path=${path}`;
   };
 
   return (
