@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
-    <ToastContainer theme="colored" position="top-right" />
+    <ToastContainer theme="colored" position="top-center" />
     <RouterProvider router={appRouter} />
   </QueryClientProvider>
 );

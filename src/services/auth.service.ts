@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { BaseService } from "./base.service";
 import { useAuthStore } from "@/store";
 import type { Credentials } from "@/types/auth";
@@ -15,7 +16,10 @@ export class AuthService extends BaseService {
 
         window.location.href = "/dashboard";
       })
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        toast.error("INVALID CREDENTIALS");
+        this.handleError(error);
+      });
   }
 
   public async unauthenticateCredentials() {

@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { Button } from "flowbite-react";
@@ -13,6 +14,7 @@ type Props = {
 const _recordLogsService = new RecordLogsService();
 
 export const RecordLogForm: React.FC<Props> = (props) => {
+  const fileInputRef = React.useRef(null);
   const { handleSubmit, register, setValue } = useForm<RecordLog>();
 
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
@@ -41,7 +43,20 @@ export const RecordLogForm: React.FC<Props> = (props) => {
   });
 
   const handleFileUpload = (file: File) => {
-    setUploadedFile(file);
+    if (file) {
+      if (file.type !== "application/pdf") {
+        if (fileInputRef.current) {
+          // @ts-ignore
+          fileInputRef.current.value = ""; // Reset the input field
+        }
+
+        toast.error("Only PDF file is accepted");
+
+        return;
+      }
+
+      setUploadedFile(file);
+    }
   };
 
   React.useEffect(() => {
@@ -98,7 +113,7 @@ export const RecordLogForm: React.FC<Props> = (props) => {
       {props.data ? null : (
         <div className="border border-gray-200 rounded-md p-3">
           <small className="mb-2">File to be uploaded:</small>
-          <input type="file" className="!border-0" onChange={(event) => handleFileUpload(event.target.files![0])} required />
+          <input type="file" className="!border-0" onChange={(event) => handleFileUpload(event.target.files![0])} ref={fileInputRef} required />
         </div>
       )}
 

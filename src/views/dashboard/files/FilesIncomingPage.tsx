@@ -13,10 +13,6 @@ const _recordLogsService = new RecordLogsService();
 const FilesIncomingPage: React.FC = () => {
   const [list, setList] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string>("");
-  const [viewData, setViewData] = React.useState<any>({
-    isOpen: false,
-    data: null,
-  });
 
   const { isLoading, refetch } = useQuery({
     queryKey: ["record-logs-incoming-data"],
@@ -48,19 +44,10 @@ const FilesIncomingPage: React.FC = () => {
     setList(filteredList);
   };
 
-  const handleView = (isOpen: boolean, data: any) => {
-    setViewData({ isOpen, data });
-  };
+  const getFileSrc = (path: string) => {
+    console.log(path);
 
-  const renderViewDetails = (data: any) => {
-    if (!data) return <p>No Data</p>;
-
-    // @ts-ignore
-    return Object.keys(data).map((k) => (
-      <p key={k}>
-        {_.startCase(k)} &mdash; {data[k] ?? "N/A"}
-      </p>
-    ));
+    return "";
   };
 
   return (
@@ -96,18 +83,6 @@ const FilesIncomingPage: React.FC = () => {
           />
         </div>
 
-        <Modal show={viewData.isOpen} onClose={() => handleView(false, null)}>
-          <Modal.Header>View Details</Modal.Header>
-          <Modal.Body>
-            <div className="space-y-6">{renderViewDetails(viewData?.data)}</div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button color="gray" onClick={() => handleView(false, null)}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
         <Card>
           {isLoading ? (
             <p className="text-center text-lg">DATA LOADING ...</p>
@@ -132,7 +107,7 @@ const FilesIncomingPage: React.FC = () => {
                   </Table.Row>
                 ) : (
                   list.map((d: RecordLog) => (
-                    <Table.Row>
+                    <Table.Row key={d.id}>
                       <Table.Cell>{d.date_received}</Table.Cell>
                       <Table.Cell>{d.time_released}</Table.Cell>
                       <Table.Cell>{d.date_letter}</Table.Cell>
@@ -149,9 +124,9 @@ const FilesIncomingPage: React.FC = () => {
                           <Link to={`/dashboard/files/form/${d.id}/edit?type=incoming`}>
                             <button className="text-xs border rounded-md p-2">Update</button>
                           </Link>
-                          <button className="text-xs text-white bg-blue-700 border rounded-md p-2" onClick={() => handleView(true, d)}>
+                          <a href={getFileSrc(d.path!)} className="text-xs text-white bg-blue-700 border rounded-md p-2">
                             View
-                          </button>
+                          </a>
                           <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
                             Delete
                           </button>
