@@ -122,7 +122,7 @@ const FilesIncomingPage: React.FC = () => {
                           <Link to={`/dashboard/files/form/${d.id}/edit?type=incoming`}>
                             <button className="text-xs border rounded-md p-2">Update</button>
                           </Link>
-                          <a href={getFileSrc(d.path!)} className="text-xs text-white bg-blue-700 border rounded-md p-2">
+                          <a href={getFileSrc(d.path!)} className="text-xs text-white bg-blue-700 border rounded-md p-2" target="_blank">
                             View
                           </a>
                           <button className="text-xs text-white bg-red-700 border rounded-md p-2" onClick={() => handleDelete(d.id)}>
