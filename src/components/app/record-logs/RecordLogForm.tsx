@@ -61,23 +61,41 @@ export const RecordLogForm: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     if (props.data) {
-      Object.keys(props.data).forEach((key: any) => setValue(key, props.data[key]));
+      Object.keys(props.data).forEach((key: any) =>
+        setValue(key, props.data[key])
+      );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data]);
 
   return (
     <form onSubmit={handleFormSubmit} className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-2">
         <small>Time of Release</small>
-        <input type="time" placeholder="Time Released" defaultValue={format(new Date(), "HH:mm")} {...register("time_released")} required />
+        <input
+          type="time"
+          placeholder="Time Released"
+          defaultValue={format(new Date(), "HH:mm")}
+          {...register("time_released")}
+          required
+        />
       </div>
       <div className="flex flex-col gap-2">
         <small>Date Received</small>
-        <input type="date" placeholder="Date Received" {...register("date_received")} required />
+        <input
+          type="date"
+          placeholder="Date Received"
+          {...register("date_received")}
+          required
+        />
       </div>
       <div className="flex flex-col gap-2">
         <small>Date of Letter</small>
-        <input placeholder="Date Letter" {...register("date_letter")} required />
+        <input
+          placeholder="Date Letter"
+          {...register("date_letter")}
+          required
+        />
       </div>
       <div className="flex flex-col gap-2">
         <small>Subject</small>
@@ -93,15 +111,27 @@ export const RecordLogForm: React.FC<Props> = (props) => {
       </div>
       <div className="flex flex-col gap-2">
         <small>Person Who Received the Communication</small>
-        <input placeholder="Person Who Received the Communication" {...register("received_by")} required />
+        <input
+          placeholder="Person Who Received the Communication"
+          {...register("received_by")}
+          required
+        />
       </div>
       <div className="flex flex-col gap-2">
         <small>Name of Folder</small>
-        <input placeholder="Name of Folder" {...register("name_of_folder")} required />
+        <input
+          placeholder="Name of Folder"
+          {...register("name_of_folder")}
+          required
+        />
       </div>
       <div className="flex flex-col gap-2">
         <small>Type (Internal or External)</small>
-        <select className="border border-gray-300 rounded-md text-xs" {...register("type_resource")} required>
+        <select
+          className="border border-gray-300 rounded-md text-xs"
+          {...register("type_resource")}
+          required
+        >
           <option value="" disabled>
             -
           </option>
@@ -113,7 +143,13 @@ export const RecordLogForm: React.FC<Props> = (props) => {
       {props.data ? null : (
         <div className="border border-gray-200 rounded-md p-3">
           <small className="mb-2">File to be uploaded:</small>
-          <input type="file" className="!border-0" onChange={(event) => handleFileUpload(event.target.files![0])} ref={fileInputRef} required />
+          <input
+            type="file"
+            className="!border-0"
+            onChange={(event) => handleFileUpload(event.target.files![0])}
+            ref={fileInputRef}
+            required
+          />
         </div>
       )}
 

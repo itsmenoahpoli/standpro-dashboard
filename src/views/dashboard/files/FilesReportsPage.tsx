@@ -1,55 +1,112 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { FcOpenedFolder } from "react-icons/fc";
 import { Card, Button } from "flowbite-react";
-import FILES_LOGO from "@/assets/files-logo.jpeg";
 
-const menuButtons = [
+const reportCategories = [
   {
     label: "DAILY",
-    url: "/dashboard/files-reports?type=daily",
+    type: "daily",
+    description: "View and manage daily communication records",
   },
   {
     label: "MONTHLY",
-    url: "/dashboard/files-reports?type=monthly",
+    type: "monthly",
+    description: "Access monthly communication summaries",
   },
   {
     label: "YEARLY",
-    url: "/dashboard/files-reports?type=yearly",
+    type: "yearly",
+    description: "Review annual communication archives",
   },
 ];
 
-const FilesReportsPage: React.FC = () => {
-  const navigate = useNavigate();
+const FolderBrowser: React.FC<{ type: string }> = ({ type }) => {
+  return (
+    <div className="h-full">
+      <Card className="h-full">
+        <div className="flex flex-col h-full">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">
+            {type.charAt(0).toUpperCase() + type.slice(1)} Records
+          </h2>
+          <div className="flex-1 border-t border-gray-200"></div>
+        </div>
+      </Card>
+    </div>
+  );
+};
 
-  const handleRedirect = (url: string) => {
-    return navigate(url);
+const FilesReportsPage: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedType = searchParams.get("type");
+
+  const handleCategorySelect = (type: string) => {
+    setSearchParams({ type });
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center gap-y-3">
-      <Card className="w-1/3 flex flex-col items-center rounded-2xl shadow-md p-10">
-        <h1 className="text-2xl text-center font-bold mb-3">REPORT PANEL</h1>
+    <div className="flex flex-col h-[calc(100vh-4rem)]">
+      {/* Breadcrumb */}
+      <nav className="p-6 pb-0">
+        <Link
+          to="/dashboard"
+          className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1"
+        >
+          ← Back to Dashboard
+        </Link>
+      </nav>
 
-        <div className="w-1/2 flex flex-col mx-auto">
-          {menuButtons.map((button) => (
-            <Button
-              key={`btn-${button.label}`}
-              color="light"
-              className="w-full py-3 font-bold text-2xl border-0 flex flex-row justify-between"
-              onClick={() => handleRedirect(button.url)}
-            >
-              <div className="flex flex-row items-center gap-7">
-                <FcOpenedFolder size={72} /> {button.label}
-              </div>
-            </Button>
-          ))}
+      <div className="flex gap-6 p-6 flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <div className="w-80 flex-shrink-0">
+          <Card>
+            <div className="mb-4">
+              <h2 className="text-xl font-bold text-gray-900">
+                Records Management
+              </h2>
+              <p className="text-sm text-gray-600 mt-1">
+                Select a time period to view records
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-y-2">
+              {reportCategories.map((category) => (
+                <Button
+                  key={`btn-${category.label}`}
+                  color="light"
+                  className={`w-full flex justify-start p-4 transition-colors ${
+                    selectedType === category.type
+                      ? "border-2 border-blue-500"
+                      : "border border-gray-200"
+                  }`}
+                  onClick={() => handleCategorySelect(category.type)}
+                >
+                  <div className="flex items-center gap-3">
+                    <FcOpenedFolder size={24} />
+                    <div className="text-left">
+                      <div className="font-medium">{category.label}</div>
+                      <div className="text-xs text-gray-600">
+                        {category.description}
+                      </div>
+                    </div>
+                  </div>
+                </Button>
+              ))}
+            </div>
+          </Card>
         </div>
 
-        <div className="p-10">
-          <img src={FILES_LOGO} alt="files-logo.jpeg" />
+        {/* Main Content */}
+        <div className="flex-1 h-full">
+          {selectedType ? (
+            <FolderBrowser type={selectedType} />
+          ) : (
+            <Card className="h-full flex items-center justify-center text-gray-500">
+              Select a category from the sidebar to view records
+            </Card>
+          )}
         </div>
-      </Card>
+      </div>
     </div>
   );
 };
